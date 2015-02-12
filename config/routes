@@ -5,4 +5,4 @@
 
 / HomeR GET
 
-/test1 Test1R POST
+/plain PlainR POST

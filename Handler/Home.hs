@@ -9,8 +9,5 @@ getHomeR = do
     setTitle "ghcjs-jquery tests"
     $(widgetFile "homepage")
 
-postTest1R :: Handler TypedContent
-postTest1R = do
-  selectRep $ do
-    provideRep $ return ("all ok" :: Text)
-
+postPlainR :: Handler TypedContent
+postPlainR = selectRep $ provideRep $ return ("plain ok" :: Text)
