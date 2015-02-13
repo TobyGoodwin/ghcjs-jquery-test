@@ -5,4 +5,5 @@
 
 / HomeR GET
 
+/pairs PairsR POST
 /plain PlainR POST
