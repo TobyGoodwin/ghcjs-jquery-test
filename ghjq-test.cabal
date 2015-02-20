@@ -76,6 +76,7 @@ library
                  , containers
                  , vector
                  , time
+                 , wai
 
 executable         ghjq-test
     if flag(library-only)

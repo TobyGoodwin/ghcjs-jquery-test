@@ -2,7 +2,9 @@ module Handler.Home where
 
 import Import
 
+import Data.Aeson (decode)
 import qualified Data.Map as Map
+import Network.Wai (strictRequestBody)
 
 getHomeR :: Handler Html
 getHomeR = do
@@ -10,6 +12,15 @@ getHomeR = do
     addScript $ StaticR ghcjs_test_jsexe_all_js
     setTitle "ghcjs-jquery tests"
     $(widgetFile "homepage")
+
+postJsonR :: Handler TypedContent
+postJsonR = do
+  r <- getRequest
+  b <- liftIO $ strictRequestBody $ reqWaiRequest r
+  liftIO $ print b
+  let c = decode b :: Maybe (Map String String)
+  liftIO $ print c
+  selectRep $ provideRep $ return ("json ok" :: Text)
 
 postPlainR :: Handler TypedContent
 postPlainR = selectRep $ provideRep $ return ("plain ok" :: Text)
