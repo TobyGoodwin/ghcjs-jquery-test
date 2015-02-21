@@ -36,7 +36,6 @@ main = do
   t "json" "json" json0 200 (Just "json ok")
   where
     t name url input rStatus rData = do
-      say $ "about to run test " ++ name
       r <- ajax3 url input
       if arStatus r == rStatus && arData r == rData
         then say $ name ++ " passed"
@@ -48,9 +47,10 @@ pairsS =
   [("one","pair"),("another","couple"),("and","third")] :: [(String,String)]
 pairsT =
   [("one","pair"),("another","couple"),("and","third")] :: [(Text,Text)]
-json0 = object [ ("key" :: Text) .= ("value" :: Text)
-               , ("other" :: Text) .= ("another" :: Text)
+json0 = object [ ("name" :: Text) .= ("Toby" :: Text)
+               , ("height" :: Text) .= (195 :: Int)
                ]
+
 
 say :: Text -> IO ()
 say x = do

@@ -13,14 +13,26 @@ getHomeR = do
     setTitle "ghcjs-jquery tests"
     $(widgetFile "homepage")
 
+data Person = Person
+                { name :: Text
+                , height :: Int
+                } deriving Show
+
+instance FromJSON Person where
+  parseJSON (Object v) = Person <$> v .: "name" <*> v .: "height"
+  parseJSON _ = mzero
+
 postJsonR :: Handler TypedContent
 postJsonR = do
   r <- getRequest
   b <- liftIO $ strictRequestBody $ reqWaiRequest r
   liftIO $ print b
-  let c = decode b :: Maybe (Map String String)
+  let c = decode b :: Maybe Person
   liftIO $ print c
-  selectRep $ provideRep $ return ("json ok" :: Text)
+  case c of
+    Just (Person "Toby" 195) ->
+        selectRep $ provideRep $ return ("json ok" :: Text)
+    _ -> selectRep $ provideRep $ return ("went wrong" :: Text)
 
 postPlainR :: Handler TypedContent
 postPlainR = selectRep $ provideRep $ return ("plain ok" :: Text)
