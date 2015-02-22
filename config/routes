@@ -5,6 +5,7 @@
 
 / HomeR GET
 
-/json JsonR POST
+/personOk PersonOkR POST
+/personEcho PersonEchoR POST
 /pairs PairsR POST
 /plain PlainR POST

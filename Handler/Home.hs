@@ -22,8 +22,11 @@ instance FromJSON Person where
   parseJSON (Object v) = Person <$> v .: "name" <*> v .: "height"
   parseJSON _ = mzero
 
-postJsonR :: Handler TypedContent
-postJsonR = do
+instance ToJSON Person where
+  toJSON (Person n h) = object [ "name" .= n, "height" .= h ]
+
+postPersonOkR :: Handler TypedContent
+postPersonOkR = do
   r <- getRequest
   b <- liftIO $ strictRequestBody $ reqWaiRequest r
   liftIO $ print b
@@ -32,6 +35,18 @@ postJsonR = do
   case c of
     Just (Person "Toby" 195) ->
         selectRep $ provideRep $ return ("json ok" :: Text)
+    _ -> selectRep $ provideRep $ return ("went wrong" :: Text)
+
+postPersonEchoR :: Handler TypedContent
+postPersonEchoR = do
+  r <- getRequest
+  b <- liftIO $ strictRequestBody $ reqWaiRequest r
+  liftIO $ print b
+  let c = decode b :: Maybe Person
+  liftIO $ print c
+  case c of
+    Just p@(Person "Toby" 195) ->
+        selectRep $ provideRep $ return $ toJSON p
     _ -> selectRep $ provideRep $ return ("went wrong" :: Text)
 
 postPlainR :: Handler TypedContent

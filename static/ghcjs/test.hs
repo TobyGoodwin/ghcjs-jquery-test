@@ -6,6 +6,8 @@ module Main where
 import ClassyPrelude hiding (fromList)
 
 import Data.Aeson
+import Data.Default
+import Data.String.Conversions
 import JavaScript.JQuery
 
 -- test of js conversion
@@ -33,10 +35,11 @@ main = do
   -- only support [(Text,Text)] so far
   -- t "pairsS" "pairs" pairsS 200 (Just "pairs ok")
   t "pairsT" "pairs" pairsT 200 (Just "pairs ok")
-  t "json" "json" json0 200 (Just "json ok")
+  t "personOk" "personOk" json0 200 (Just "json ok")
+  t "personEcho" "personEcho" json0 200 (Just $ cs $ encode json0)
   where
     t name url input rStatus rData = do
-      r <- ajax3 url input
+      r <- ajax url input def
       if arStatus r == rStatus && arData r == rData
         then say $ name ++ " passed"
         else say $ name ++ " failed: r is " ++ tshow r
