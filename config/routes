@@ -1,0 +1,11 @@
+/static StaticR Static appStatic
+
+/favicon.ico FaviconR GET
+/robots.txt RobotsR GET
+
+/ HomeR GET
+
+/personOk PersonOkR POST
+/personEcho PersonEchoR POST
+/pairs PairsR POST
+/plain PlainR POST
