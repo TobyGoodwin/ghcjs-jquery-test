@@ -29,17 +29,18 @@ main = do
   test2 <- fromJSRef test1 :: IO (Maybe Value)
   putStrLn $ "test2 is " ++ tshow test2
   clog test1
-  t "nonexistent" "nonesuch" string 404 Nothing
-  t "string" "plain" string 200 (Just "plain ok")
-  t "text" "plain" text 200 (Just "plain ok")
+  t "nonexistent" "nonesuch" string 404 Null
+  t "string" "plain" string 200 (String "plain ok")
+  t "text" "plain" text 200 (String "plain ok")
   -- only support [(Text,Text)] so far
   -- t "pairsS" "pairs" pairsS 200 (Just "pairs ok")
-  t "pairsT" "pairs" pairsT 200 (Just "pairs ok")
-  t "personOk" "personOk" json0 200 (Just "json ok")
-  t "personEcho" "personEcho" json0 200 (Just $ cs $ encode json0)
+  t "pairsT" "pairs" pairsT 200 (String "pairs ok")
+  t "personOk" "personOk" json0 200 (String "json ok")
+  t "personEcho" "personEcho" json0 200 json0
   where
     t name url input rStatus rData = do
       r <- ajax url input def
+      print r
       if arStatus r == rStatus && arData r == rData
         then say $ name ++ " passed"
         else say $ name ++ " failed: r is " ++ tshow r
