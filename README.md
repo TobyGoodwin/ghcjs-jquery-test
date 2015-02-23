@@ -6,3 +6,6 @@ code. Build it manually like this:
 
     cd static/ghcjs
     ghcjs test.hs
+
+This is currently for testing my own version of ghcjs-jquery (pull
+requests have been made!)
