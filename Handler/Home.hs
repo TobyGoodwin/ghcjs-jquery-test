@@ -25,6 +25,14 @@ instance FromJSON Person where
 instance ToJSON Person where
   toJSON (Person n h) = object [ "name" .= n, "height" .= h ]
 
+getGetTextR :: Handler TypedContent
+getGetTextR = do
+  selectRep $ provideRep $ return ("the cat sat on the mat" :: Text)
+
+getGetJsonR :: Handler TypedContent
+getGetJsonR = do
+  selectRep $ provideRep $ return $ toJSON $ Person "Gary Getter" 173
+
 postPersonOkR :: Handler TypedContent
 postPersonOkR = do
   r <- getRequest

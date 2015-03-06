@@ -30,6 +30,7 @@ main = do
   putStrLn $ "test2 is " ++ tshow test2
   clog test1
   t "nonexistent" "nonesuch" string 404 Null
+  t "getText" "getText" () 200 (String "the cat sat on the mat")
   t "string" "plain" string 200 (String "plain ok")
   t "text" "plain" text 200 (String "plain ok")
   -- only support [(Text,Text)] so far

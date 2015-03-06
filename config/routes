@@ -5,6 +5,9 @@
 
 / HomeR GET
 
+/getText GetTextR GET
+/getJson GetJsonR GET
+
 /personOk PersonOkR POST
 /personEcho PersonEchoR POST
 /pairs PairsR POST
