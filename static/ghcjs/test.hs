@@ -31,6 +31,7 @@ main = do
   clog test1
   t "nonexistent" "nonesuch" string 404 Null
   t "getText" "getText" () 200 (String "the cat sat on the mat")
+  t "getJson" "getJson" () 200 json1
   t "string" "plain" string 200 (String "plain ok")
   t "text" "plain" text 200 (String "plain ok")
   -- only support [(Text,Text)] so far
@@ -52,9 +53,13 @@ pairsS =
   [("one","pair"),("another","couple"),("and","third")] :: [(String,String)]
 pairsT =
   [("one","pair"),("another","couple"),("and","third")] :: [(Text,Text)]
-json0 = object [ ("name" :: Text) .= ("Toby" :: Text)
-               , ("height" :: Text) .= (195 :: Int)
-               ]
+
+jPerson :: Text -> Int -> Value
+jPerson n h = object [ ("name" :: Text) .= n
+                     , ("height" :: Text) .= h
+                     ]
+json0 = jPerson "Toby" 195
+json1 = jPerson "Gary Getter" 173
 
 
 say :: Text -> IO ()
